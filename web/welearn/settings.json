@@ -1,0 +1,35 @@
+{ "galaxy.meteor.com":
+  { "env":
+    {
+      "ROOT_URL"  : "https://www.welearn.meteorapp.com",
+      "MONGO_URL": "mongodb://admin:RVUG4NLuMySc@ds163680.mlab.com:63680/welearn"
+    }
+  },
+  "services": {
+    "facebook": {
+      "dev": {
+        "service"     : "facebook",
+        "appId"       : "453092438472772",
+        "secret"      : "045f780932663f1d91dafd26fafe2ead"
+      },
+      "prod": {
+        "service"     : "facebook",
+        "appId"       : "453092438472772",
+        "secret"      : "045f780932663f1d91dafd26fafe2ead"
+      }
+    }
+  },
+  "private" : {
+    "defaultAdmin": {
+      "username": "edu4good",
+      "email": "del@coinseed.co",
+      "password": "PasswordPublic",
+      "profile": {
+        "name": "Del Davaa",
+        "email": "del@coinseed.co"
+      }
+    },
+  },
+  "public" : {
+  }
+}
