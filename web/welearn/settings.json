@@ -28,8 +28,9 @@
         "name": "Del Davaa",
         "email": "del@coinseed.co"
       }
-    },
+    }
   },
   "public" : {
+    "somethingPublic": "somethingPublic"
   }
 }
