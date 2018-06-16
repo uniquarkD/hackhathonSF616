@@ -9,9 +9,17 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.51",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-import-resolver-meteor": "^0.4.0",
+    "eslint-plugin-async-await": "^0.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-meteor": "^5.0.0",
+    "eslint-plugin-react": "^7.9.1",
     "meteor-node-stubs": "^0.4.1",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "redux-devtools": "^3.4.1"
   },
   "meteor": {
     "mainModule": {
