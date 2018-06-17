@@ -1,2 +1,2 @@
-import './main'
-import '../imports/client'
+import './main.html'
+import '../imports/startup/client/routes'
