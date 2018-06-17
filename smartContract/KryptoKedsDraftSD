@@ -1,0 +1,47 @@
+pragma solidity 0.4.20;
+contract KryptoKeds {
+   address public owner;
+   uint256 public minimumDonation;
+   uint256 public totalDonation;
+   uint256 public numberOfDonations;
+   uint256 public minPassingScore = 75;
+   uint256 public totalEarnedEth;
+   address[] public donors;
+   address[] public students;
+
+   struct Donors {
+      uint256 amountDonated;
+   }
+
+   // The address of the donor and => the user info   
+   mapping(address => Donors) public donorInfo;
+
+   struct Students {
+      uint256 testName;
+      uint256 testScore;
+      uint256 totalEarnedEth;
+   }
+
+   // The address of the students and => the user info   
+   mapping(address => Students) public studentInfo;
+
+  function KryptoKeds(uint256 _minPassingScore){
+   owner = msg.sender;
+   if(_minPassingScore >= 75 ) minPassingScore = _minPassingScore;
+}
+   //used to destroy the contract
+   function kill() public {
+      if(msg.sender == owner) selfdestruct(owner);
+   }
+
+   donorInfo[msg.sender].amountDonated = msg.value;
+      numberOfDonations++;
+      totalDonation += msg.value;
+
+   studentInfo[msg.sender].testScore = msg.value;
+      studentInfo[msg.sender].testName = testName;
+      totalEarnedEth += msg.value;
+
+   //Now create a function for giving ethurum if the student grade >= 75
+
+}
