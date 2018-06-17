@@ -88,6 +88,7 @@ class Navbar extends Component {
     )
   }
   render() {
+    console.log(this.props.user);
     return (
       <div style={{ height: 60, width: '100%' }}>
         {this.renderSmall()}
