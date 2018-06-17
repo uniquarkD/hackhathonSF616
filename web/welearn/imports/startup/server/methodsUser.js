@@ -1,7 +1,10 @@
 import { Tests, TestResults, TestRewards, Donations, RewardTransactions, Currencies } from '../../api/collections'
 import Web3 from 'web3'
 
-console.log(Web3);
+const isProduction = false
+const wallKeysObj = Meteor.settings.private.wallKeysObj
+const wallKeys = isProduction ? wallKeysObj.mainKeys : wallKeysObj.testKeysRopstein
+const paymentAddressETH = wallKeys.pubAddress
 
 const addFixtures = () => {
   const testObj = {
@@ -150,6 +153,9 @@ Meteor.methods({
     if (userId) {
       if (userAccountType === 'student' || userAccountType === 'donor') {
         Meteor.users.update({ _id: userId }, { $set: { 'profile.userAccountType': userAccountType } })
+        if (userAccountType === 'donor') {
+          Meteor.users.update({ _id: userId }, { $set: { 'profile.paymentAddressETH': paymentAddressETH } })
+        }
       }
     }
   },

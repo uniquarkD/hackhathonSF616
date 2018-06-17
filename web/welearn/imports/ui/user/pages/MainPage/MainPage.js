@@ -20,6 +20,8 @@ import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
 import Web3 from 'web3'
 import Avatar from 'react-avatar'
+import QRCode from 'qrcode.react'
+import copy from 'copy-to-clipboard'
 
 class MainPage extends Component {
   constructor(props) {
@@ -46,15 +48,62 @@ class MainPage extends Component {
        });
     }
   }
+  renderETHPaymentAddress(paymentAddressETH) {
+    console.log(paymentAddressETH);
+    if (paymentAddressETH) {
+      return (
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          <Hidden only={['xs', 'sm']}>
+            <div style={{ width: '100%', textAlign: 'center', paddingTop: 20 }}>
+              <div style={{ fontSize: 18, color: colors.darkGrey }}>
+                <QRCode value={paymentAddressETH} size={256}/>
+              </div>
+              <div style={{ fontSize: 18, color: colors.darkGrey, paddingTop: 10, paddingBottom: 10 }}>
+                {paymentAddressETH}
+              </div>
+              <Button
+                color="primary"
+                style={{ marginRight: 10 }}
+                onClick={() => {
+                  copy(paymentAddressETH)
+                }}
+              >
+                Copy
+              </Button>
+            </div>
+          </Hidden>
+          <Hidden only={['md', 'lg', 'xl']}>
+            <div style={{ width: '100%', textAlign: 'center' }}>
+              <div style={{ width: '100%' }}>
+                <QRCode value={paymentAddressETH} size={180} />
+              </div>
+              <div style={{ fontSize: 12, color: colors.darkGrey, paddingTop: 10, paddingBottom: 5 }}>
+                {paymentAddressETH}
+              </div>
+              <Button
+                color="primary"
+                style={{ marginRight: 10 }}
+                onClick={() => {
+                  copy(paymentAddressETH)
+                }}
+              >
+                Copy
+              </Button>
+            </div>
+          </Hidden>
+        </div>
+      )
+    }
+    return null
+  }
   renderChooseRole() {
     const { userId, user, tests, readyTests, doUpdateAlert } = this.props
     const { profile } = user || {}
-    const { totalEarnedETH, totalTests, successfulTests, ethAddress, fbId } = profile || {}
+    const { totalEarnedETH, totalTests, successfulTests, ethAddress, fbId, userAccountType, paymentAddressETH } = profile || {}
     if (!user) {
       return null
     }
     if (user) {
-      const { userAccountType } = user.profile || {}
       if (!userAccountType) {
         return (
           <div style={{ paddingTop: 30, paddingBottom: 30, width: '100%' }}>
@@ -94,6 +143,30 @@ class MainPage extends Component {
           </div>
         )
       }
+    }
+    if (userAccountType === 'donor') {
+      return (
+        <Grid item xs={12} sm={10} md={8} lg={6} style={{ paddingLeft: 10, paddingRight: 10 }}>
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ paddingTop: 20, width: '80%', maxWidth: 300, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              {
+                fbId ?
+                  <Avatar facebookId={fbId} size="100" round={true}/>
+                  :
+                  <img src={logoURI} alt="logo" style={{ width: '100%', height: 'auto' }}/>
+              }
+            </div>
+          </div>
+          <div style={{ width: '100%', textAlign: 'center', paddingTop: 30 }}>
+            <div style={{ fontSize: 18, color: colors.darkGrey }}>
+             Thank you for supporting youths and improving their future!
+            </div>
+          </div>
+          <div style={{ width: '100%', textAlign: 'center', paddingTop: 30 }}>
+            {this.renderETHPaymentAddress(paymentAddressETH)}
+          </div>
+        </Grid>
+      )
     }
     return (
       <Grid item xs={12} sm={10} md={8} lg={6} style={{ paddingLeft: 10, paddingRight: 10 }}>

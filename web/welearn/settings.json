@@ -28,6 +28,19 @@
         "name": "Del Davaa",
         "email": "del@welearn.meteorapp.com"
       }
+    },
+    "infuraKeys": {
+      "accessToken": "XcStixfGVVDUBTXlAgcT"
+    },
+    "wallKeysObj": {
+      "testKeysRopstein": {
+        "pubAddress": "0x8B2d32774FAF40581bedD878b53f81EE99E9737a",
+        "privateKey": "bf2d97de51784aaeb7d8001ece0c04e8081fd505ccf22a299df4e30bb7797947"
+      },
+      "mainKeys": {
+        "pubAddress": "0x8B2d32774FAF40581bedD878b53f81EE99E9737a",
+        "privateKey": "bf2d97de51784aaeb7d8001ece0c04e8081fd505ccf22a299df4e30bb7797947"
+      }
     }
   },
   "public" : {
