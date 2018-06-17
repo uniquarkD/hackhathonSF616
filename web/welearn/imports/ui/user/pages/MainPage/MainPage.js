@@ -12,7 +12,7 @@ class MainPage extends Component {
   }
   render() {
     return (
-      <div style={{ padding: 100 }}>
+      <div style={{ padding: 100, paddingTop: 0, height: windowHeight }}>
         <p>
           MainPage
         </p>

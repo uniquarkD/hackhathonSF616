@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render, ReactDOM } from 'react-dom';
 import styles from './styles'
+import colors from '../../../../config/colors'
 /* Meteor data on React */
 import { withTracker, createContainer } from 'meteor/react-meteor-data';
 
@@ -14,9 +15,9 @@ class Footer extends Component {
   }
   render() {
     return (
-      <div style={{ padding: 100 }}>
+      <div style={{ padding: 100, borderTopWidth: 1, borderTopColor: colors.lightGrey, borderTopStyle: 'solid' }}>
         <p>
-          Footer
+          Footer: Footer
         </p>
       </div>
     )

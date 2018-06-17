@@ -29,27 +29,17 @@ class Navbar extends Component {
        <Hidden only={['md', 'lg', 'xl']}>
          <div style={{ height: 60, width: '100%' }}>
            <Drawer open={this.state.isVisibleDrawer} onClose={this.setVisibleDrawer}>
-            <div
-              tabIndex={0}
-              role="button"
-              onClick={this.setVisibleDrawer}
-              onKeyDown={this.setVisibleDrawer}
-            >
-              <div style={{ paddingTop: 30, paddingLeft: 50, paddingRight: 40 }}>
-                <div style={{ paddingTop: 10 }}>
-                  Home
-                </div>
-                <div style={{ paddingTop: 10 }}>
-                  page 1
-                </div>
-                <div style={{ paddingTop: 10 }}>
-                  page 2
-                </div>
-                <Button variant="contained" color="primary" onClick={() => { console.log('Sign In!'); }}>
-                  Sign In
-                </Button>
-              </div>
-            </div>
+             <div style={{ display: 'flex', flexDirection: 'column', paddingTop: 30, paddingLeft: 50, paddingRight: 50 }}>
+               <Button color="primary" onClick={() => { console.log('Sign In!'); }}>
+                 Home
+               </Button>
+               <Button color="primary" onClick={() => { console.log('Sign In!'); }}>
+                 Main Page
+               </Button>
+               <Button color="primary" onClick={() => { console.log('Sign In!'); }}>
+                 Sign In
+               </Button>
+             </div>
           </Drawer>
           <div style={{ height: 60, width: '100%', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', paddingRight: 20 }}>
             <IconButton

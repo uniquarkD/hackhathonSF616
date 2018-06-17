@@ -11,8 +11,9 @@ class LandingPage extends Component {
     };
   }
   render() {
+    const windowHeight = window.innerHeight
     return (
-      <div style={{ padding: 100 }}>
+      <div style={{ padding: 100, paddingTop: 0, height: windowHeight }}>
         <p>
           LandingPage
         </p>
