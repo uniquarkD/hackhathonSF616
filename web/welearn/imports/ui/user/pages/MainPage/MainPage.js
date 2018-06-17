@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import { Redirect } from 'react-router'
+import { Link } from 'react-router-dom'
 
 class MainPage extends Component {
   constructor(props) {
@@ -74,9 +75,11 @@ class MainPage extends Component {
                 const { _id, testName, rewardETH } = test
                 return (
                   <div key={_id} style={{ width: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <Button color="primary" onClick={() => {}}>
-                      {testName} {"  -  "} {rewardETH} ETH
-                    </Button>
+                    <Link to={`/tests/${_id}`}>
+                      <Button color="primary" onClick={() => {}}>
+                        {testName} {"  -  "} {rewardETH} ETH
+                      </Button>
+                    </Link>
                     <div style={{ width: '100%', maxWidth: 400, paddingTop: 10, paddingBottom: 10 }}>
                       <Divider light />
                     </div>
