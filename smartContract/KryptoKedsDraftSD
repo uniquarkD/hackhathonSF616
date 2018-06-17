@@ -2,7 +2,6 @@ pragma solidity 0.4.20;
 contract KryptoKeds {
    address public owner;
    uint256 public minimumDonation;
-   uint256 public totalDonation;
    uint256 public numberOfDonations;
    uint256 public minPassingScore = 75;
    uint256 public totalEarnedEth;
@@ -11,6 +10,7 @@ contract KryptoKeds {
 
    struct Donors {
       uint256 amountDonated;
+      uint256 totalDonation;
    }
 
    // The address of the donor and => the user info   
