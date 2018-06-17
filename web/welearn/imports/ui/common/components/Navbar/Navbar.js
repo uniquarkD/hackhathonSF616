@@ -63,7 +63,10 @@ class Navbar extends Component {
     return (
        <Hidden only={['xs', 'sm']}>
          <div style={{ height: 60, width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 20 }}>
-           <Button variant="contained" color="primary" onClick={() => { console.log('clicked!'); }}>
+           <Button variant="contained" color="primary" onClick={() => {
+               console.log('Sign In!');
+               this.props.doUpdateAlert('Working alert!')
+            }}>
              Sign In
            </Button>
          </div>
