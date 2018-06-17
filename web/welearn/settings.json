@@ -10,12 +10,12 @@
       "dev": {
         "service"     : "facebook",
         "appId"       : "453092438472772",
-        "secret"      : "045f780932663f1d91dafd26fafe2ead"
+        "secret"      : "255a7e100057fa78a57c1edbceefb45c"
       },
       "prod": {
         "service"     : "facebook",
         "appId"       : "453092438472772",
-        "secret"      : "045f780932663f1d91dafd26fafe2ead"
+        "secret"      : "255a7e100057fa78a57c1edbceefb45c"
       }
     }
   },
