@@ -156,7 +156,7 @@ Meteor.methods({
       if (userAccountType === 'student' || userAccountType === 'donor') {
         Meteor.users.update({ _id: userId }, { $set: { 'profile.userAccountType': userAccountType } })
         if (userAccountType === 'donor') {
-          Meteor.users.update({ _id: userId }, { $set: { 'profile.CONTRACT_ADDRESS': paymentAddressETH } })
+          Meteor.users.update({ _id: userId }, { $set: { 'profile.paymentAddressETH': CONTRACT_ADDRESS } })
         }
       }
     }
