@@ -1,0 +1,5 @@
+export const Tests = new Mongo.Collection('tests')
+export const TestResults = new Mongo.Collection('testResults')
+export const TestRewards = new Mongo.Collection('testRewards')
+export const Donations = new Mongo.Collection('donations')
+export const RewardTransactions = new Mongo.Collection('rewardTransactions')
