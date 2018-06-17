@@ -76,7 +76,7 @@ class TestPage extends Component {
     }
   }
   renderFirst() {
-    const { userId, user, test, readyTest } = this.props
+    const { userId, user, test, readyTest, history, doUpdateAlert } = this.props
     const { profile } = user || {}
     const { totalEarnedETH, totalTests, successfulTests } = profile || {}
     return (
@@ -135,10 +135,15 @@ class TestPage extends Component {
                   if (test.quizzesArr.length === answersArr.length) {
                     Meteor.call('submitTest', { testId: test._id, answersArr }, (err, res) => {
                       if (err) {
-                        console.log(err);
+                        console.log(err)
                       }
                       if (res) {
-                        this.props.doUpdateAlert(res.msg || "")
+                        const textMsg = `${res.msg} The page will be redirected to home page in shortly.`
+                        this.props.doUpdateAlert(textMsg)
+                        setTimeout(() => {
+                          //doUpdateAlert()
+                          history.push('/mainpage')
+                        }, 4 * 1000)
                       }
                     })
                   } else {
