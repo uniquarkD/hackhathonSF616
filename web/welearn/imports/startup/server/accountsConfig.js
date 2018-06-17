@@ -61,12 +61,12 @@ Meteor.startup(function () {
     );
   }
   Accounts.onCreateUser(function (options, user) {
-    console.log('onCreateUser');
     let userExtended = user
     let profile = {}
     let userFirstName = ''
     if (user && !(user.emails && user.emails[0]) && user.services && user.services.facebook) {
       const facebookObj = user.services.facebook
+      console.log(facebookObj);
       const { email, name, first_name, last_name, gender, age_range, locale, link } = facebookObj
       const fbProfile = { email, name, firstName: first_name, lastName: last_name, gender, ageRange: age_range, locale, link, createdAt: new Date() }
       let emails;

@@ -20,7 +20,6 @@ class LandingPage extends Component {
     const { user, doUpdateAlert } = this.props
     if (user) {
       const { userAccountType } = user.profile || {}
-      console.log(userAccountType);
       if (!userAccountType) {
         return (
           <div style={{ paddingTop: 30, paddingBottom: 30, width: '100%' }}>
