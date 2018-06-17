@@ -21,3 +21,5 @@ react-meteor-data
 accounts-base
 accounts-password
 accounts-facebook
+std:accounts-ui
+alanning:roles

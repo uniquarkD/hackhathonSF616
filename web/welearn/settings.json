@@ -21,12 +21,12 @@
   },
   "private" : {
     "defaultAdmin": {
-      "username": "edu4good",
-      "email": "del@coinseed.co",
+      "username": "admin",
+      "email": "admin@welearn.meteorapp.com",
       "password": "PasswordPublic",
       "profile": {
         "name": "Del Davaa",
-        "email": "del@coinseed.co"
+        "email": "del@welearn.meteorapp.com"
       }
     }
   },
