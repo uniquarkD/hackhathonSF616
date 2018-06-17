@@ -18,6 +18,7 @@ import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
+import Web3 from 'web3'
 
 class MainPage extends Component {
   constructor(props) {
@@ -28,40 +29,60 @@ class MainPage extends Component {
   }
   componentDidMount() {
     this._isMounted = true
+    this.initWeb3()
   }
-  loginFb() {
-    if (this._isMounted) this.setState({ loadingBtn: !this.state.loadingBtn });
-    Meteor.loginWithFacebook({}, (err) => {
-      if (this._isMounted) { this.setState({ loadingBtn: !this.state.loadingBtn }); }
-      if (err) {
-        throw new Meteor.Error("Facebook login failed");
-      }
-    })
-  }
-  login(userId) {
-    if (userId) {
-      Meteor.logout()
-    } else {
-      this.loginFb()
+  initWeb3() {
+    console.log(`what is web3 right now:  ${window.web3}`);
+     if (typeof window.web3 !== 'undefined') {
+       console.log(window.web3);
+       window.web3.eth.getAccounts((err, res) => {
+         if (err) {
+           console.log(err);
+         }
+         if (res) {
+           console.log(res);
+           if (res[0]) {
+             this.setState({ ethAddress: res[0] })
+           }
+         }
+       });
     }
   }
   renderETHAddressInput(ethAddress) {
     if (ethAddress) {
-      return null
+      return (
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          Your address: {ethAddress}
+        </div>
+      )
     }
     return (
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <TextField
-          id="input"
+          id="ETHAddress"
           label="Your Ethereum Address"
           value={this.state.ethAddress}
+          defaultValue="Your Ethereum Address"
+          placeholder="Your Ethereum Address"
           onChange={(event) => {
             this.setState({ ethAddress: event.target.value })
           }}
           margin="normal"
           fullWidth
         />
-        <Button color="primary" onClick={() => {}}>
+      <Button color="primary" onClick={() => {
+          const newETHAddress = this.state.ethAddress
+          if (Web3.utils.isAddress(newETHAddress)) {
+            console.log('submit!  ', newETHAddress);
+            Meteor.call('saveETHAddress', newETHAddress, (err, res) => {
+              if (err) {
+                console.log(err);
+              }
+            })
+          } else {
+            this.props.doUpdateAlert('Please, enter a valid wallet address!')
+          }
+        }}>
           Submit
         </Button>
       </div>
@@ -84,7 +105,7 @@ class MainPage extends Component {
           </div>
         </div>
         <div style={{ width: '100%', textAlign: 'center', paddingTop: 30 }}>
-          {this.renderETHAddressInput(ethAddress)}
+          {user ? this.renderETHAddressInput(ethAddress) : null}
         </div>
         {
           tests && tests.length > 0 ?
