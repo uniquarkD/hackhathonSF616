@@ -41,7 +41,15 @@ class Navbar extends Component {
       }
     })
   }
+  login(userId) {
+    if (userId) {
+      Meteor.logout()
+    } else {
+      this.loginFb()
+    }
+  }
   renderSmall() {
+    const { userId } = this.props
     return (
        <Hidden only={['md', 'lg', 'xl']}>
          <div style={{ height: 60, width: '100%' }}>
@@ -51,13 +59,17 @@ class Navbar extends Component {
                  Home
                </Button>
                <Button color="primary" onClick={() => {
-                   console.log('Sign In!');
                    this.props.doUpdateAlert('Working alert!')
                 }}>
                  Main Page
                </Button>
-               <Button color="primary" onClick={() => { console.log('Sign In!'); }}>
-                 Sign In FB
+               <Button color="primary" onClick={() => { this.login(userId) }}>
+                 {
+                   userId ?
+                     'Sign out'
+                     :
+                     'Login with Facebook'
+                 }
                </Button>
              </div>
           </Drawer>
@@ -74,21 +86,25 @@ class Navbar extends Component {
     )
   }
   renderBig() {
+    const { userId } = this.props
     return (
        <Hidden only={['xs', 'sm']}>
          <div style={{ height: 60, width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 20 }}>
            <Button variant="contained" color="primary" onClick={() => {
-               console.log('Sign In!');
-               this.loginFb()
+              this.login(userId)
             }}>
-             Sign In
+              {
+                userId ?
+                  'Sign out'
+                  :
+                  'Login with Facebook'
+              }
            </Button>
          </div>
        </Hidden>
     )
   }
   render() {
-    console.log(this.props.user);
     return (
       <div style={{ height: 60, width: '100%' }}>
         {this.renderSmall()}
