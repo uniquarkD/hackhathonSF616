@@ -1,58 +1,103 @@
 pragma solidity 0.4.24;
-contract Kedu {
+contract WeLearn {
+   address public org;
    address public student;
-   uint256 public minScore = 0;
-   uint256 public maxScore = 100;
-   unit256 public gradeC = 60
-   unit256 public gradeB = 80
-   unit256 public gradeA = 95
-   unit256 public unitReward = 1
+   uint256 public value;
+   uint256 public score;
 
-   struct Student {
-     unit256 id;
-     unit256 quizId;
-     uint256 score;
+   constructor() public payable {
+        org = msg.sender;
+        value = msg.value / 2;
+        require((2 * value) == msg.value, "Value has to be even.");
+    }
+
+   //Grading
+   enum Grade {D, C, B, A}
+   Grade public grade;
+   Grade constant defaultGrade = Grade.D;
+
+   function getGrade(uint256 _score) public returns(Grade) {
+     if (_score >= 95){
+       return Grade.A;
+     }else if (_score >= 80 && _score < 95) {
+       return Grade.B;
+     } else if (_score >= 60 && _score < 80 ) {
+       return Grade.C;
+     } else {
+       return Grade.D;
+     }
    }
 
-   constructor() public {
-      owner = msg.sender;
+   //modifier
+   modifier condition(bool _condition) {
+        require(_condition);
+        _;
     }
 
-    function checkScore(uint256 score) public payable {
-      require(score >= minScore && score <= maxScore)
+    modifier onlyStudent() {
+        require(
+            msg.sender == student,
+            "Only buyer can call this."
+        );
+        _;
+    }
 
-      studentInfo[msg.sender].score = score;
-      student.push(msg.sender);
+    modifier onlyOrg() {
+        require(
+            msg.sender == org,
+            "Only Organization can call this."
+        );
+        _;
+    }
 
-      if (score >= gradeA){
-        rewardStudent(gradeA)
-      }else if (score >= gradeB && score < gradeA) {
-        rewardStudent(gradeB)
-      } else if (score >= gradeC && score < gradeB ) {
-        rewardStudent(gradeC)
-      } else {
-        // no pay
+    modifier inState(State _state) {
+        require(
+            state == _state,
+            "Invalid state."
+        );
+        _;
+    }
+
+    //Event
+    event Aborted();
+    event ScoreConfirmed();
+    event RewardReceived();
+
+   enum State { Created, Locked, Inactive }
+   State public state;
+
+   //Abort donation and reclaim the ether.
+   //can only be called by the org before
+   // the contract is Locked
+   function abort() public
+    onlyOrg
+    inState(State.Created)
+    {
+      emit Aborted();
+      state = State.Inactive;
+      org.transfer(address(this).balance);
+    }
+
+    function confirmScore(uint256 _score) public
+      inState(State.Created)
+      condition(_score >= 0 && _score <= 100)
+      payable
+      {
+        score = uint256(getGrade(_score));
+        emit ScoreConfirmed();
+        student = msg.sender;
+        state = State.Locked;
       }
+
+    function confirmReceived() public
+      onlyStudent
+      inState(State.Locked)
+    {
+      emit RewardReceived();
+      state =  State.Inactive;
+
+      org.transfer(value);
+      student.transfer(address(this).balance);
     }
 
-    function rewardStudent(uint256 grade) public {
-      switch(grade) {
-        case gradeA:
-          student.transfer(unitReward * 3)
-          break;
-        case gradeB:
-          student.transfer(unitReward * 2)
-          break;
-        case gradeC:
-          student.transfer(unitReward * 1)
-          break;
-        default:
-          break;
-      }
-    }
-
-   function kill() public {
-      if(msg.sender == owner) selfdestruct(owner);
-
-   }
 }
