@@ -102,7 +102,7 @@ class LandingPage extends Component {
     return (
       <Grid item xs={12} sm={12} md={4} lg={4} style={{ paddingLeft: 10, paddingRight: 10 }}>
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <div style={{ paddingTop: 30, width: '80%', maxWidth: 300 }}>
+          <div style={{ width: '80%', maxWidth: 300 }}>
             <img src={logoURI} alt="logo" style={{ width: '100%', height: 'auto' }}/>
           </div>
         </div>
