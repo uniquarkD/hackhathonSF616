@@ -6,6 +6,7 @@ const isProduction = false
 const wallKeysObj = Meteor.settings.private.wallKeysObj
 const wallKeys = isProduction ? wallKeysObj.mainKeys : wallKeysObj.testKeysRopstein
 const paymentAddressETH = wallKeys.pubAddress
+const CONTRACT_ADDRESS = wallKeys.contractAddress
 
 const addFixtures = () => {
   const testObj = {
@@ -155,7 +156,7 @@ Meteor.methods({
       if (userAccountType === 'student' || userAccountType === 'donor') {
         Meteor.users.update({ _id: userId }, { $set: { 'profile.userAccountType': userAccountType } })
         if (userAccountType === 'donor') {
-          Meteor.users.update({ _id: userId }, { $set: { 'profile.paymentAddressETH': paymentAddressETH } })
+          Meteor.users.update({ _id: userId }, { $set: { 'profile.CONTRACT_ADDRESS': paymentAddressETH } })
         }
       }
     }
