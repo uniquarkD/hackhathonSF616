@@ -1,4 +1,7 @@
 import { Tests, TestResults, TestRewards, Donations, RewardTransactions, Currencies } from '../../api/collections'
+import Web3 from 'web3'
+
+console.log(Web3);
 
 const addFixtures = () => {
   const testObj = {
@@ -220,5 +223,12 @@ Meteor.methods({
       resultObj = { success: false, msg: 'No account!' }
     }
     return resultObj
-  }
+  },
+  saveETHAddress(newETHAddress) {
+    check(newETHAddress, String)
+    const userId = Meteor.userId()
+    if (userId) {
+      Meteor.users.update({ _id: userId }, { $set: { 'profile.ethAddress': newETHAddress } })
+    }
+  },
 })
