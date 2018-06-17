@@ -66,10 +66,9 @@ Meteor.startup(function () {
     let profile = {}
     if (user && !(user.emails && user.emails[0]) && user.services && user.services.facebook) {
       const facebookObj = user.services.facebook
-      console.log(facebookObj);
-      const { email, name, first_name, last_name, gender, age_range, locale, link, picture } = facebookObj
+      const { email, name, first_name, last_name, gender, age_range, locale, link, picture, id } = facebookObj
       const photoURI = (picture && picture.data && picture.data.url) || logoURI
-      const fbProfile = { email, name, firstName: first_name, lastName: last_name, gender, ageRange: age_range, locale, link, photoURI, createdAt: new Date() }
+      const fbProfile = { email, name, firstName: first_name, lastName: last_name, gender, ageRange: age_range, locale, link, photoURI, fbId: id, createdAt: new Date() }
       let emails;
       if (email) {
         emails = [{ address: email, verified: true }]
