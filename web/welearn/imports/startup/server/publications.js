@@ -12,5 +12,9 @@ Meteor.publish("currencies", function () {
 })
 
 Meteor.publish("tests", function (limit) {
-  return Tests.find({}, { sort: { createdAt: -1 }, limit: limit || 10 })
+  return Tests.find({}, { sort: { createdAt: -1 }, limit: limit || 10, fields: { quizzesArr: 0 } })
+})
+
+Meteor.publish("singleTest", function (testId) {
+  return Tests.find({ _id: testId })
 })

@@ -9,6 +9,7 @@ import reducers from "../../ui/reduxReducers"
 /* Pages */
 import LandingPage from "../../ui/user/pages/LandingPage"
 import MainPage from "../../ui/user/pages/MainPage"
+import TestPage from "../../ui/user/pages/TestPage"
 /* Components */
 import Alert from "../../ui/common/components/Alert"
 import Navbar from "../../ui/common/components/Navbar"
@@ -31,6 +32,7 @@ class Routes extends Component {
             <div className='cont-body'>
               <Route exact path="/" component={ LandingPage } />
               <Route exact path="/mainpage" component={ MainPage } />
+              <Route exact path="/testpage/:testId" component={ TestPage } />
             </div>
             <Alert />
           </div>

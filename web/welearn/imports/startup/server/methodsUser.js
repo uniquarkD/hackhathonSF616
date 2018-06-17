@@ -26,7 +26,7 @@ const addFixtures = () => {
             text: `Ethereum's internal code is Turing Complete whilst Bitcoin's isn't`,
           },
         ],
-        correctAnserIndex: 3,
+        correctAnswerIndex: 3,
       },
       {
         question: 'What is an Ether in Ethereum?',
@@ -48,7 +48,7 @@ const addFixtures = () => {
             text: "A method of redistributing Ethereum via mining"
           },
         ],
-        correctAnserIndex: 0,
+        correctAnswerIndex: 0,
       },
       {
         question: 'What is gas in Ethereum?',
@@ -70,10 +70,11 @@ const addFixtures = () => {
             text: "How much power the network has securing it in Giga Hashes"
           },
         ],
-        correctAnserIndex: 1,
+        correctAnswerIndex: 1,
       },
     ]
   }
+
   const hasTest = Tests.findOne({})
   let testId
   if (!hasTest) {
@@ -148,4 +149,57 @@ Meteor.methods({
       }
     }
   },
+  submitTest({ testId, answersArr }) {
+    check(answersArr, Array)
+    check(testId, String)
+    let resultObj = { success: false }
+    const userId = Meteor.userId()
+    if (userId) {
+      const user = Meteor.user()
+      const { profile } = user
+      const { userAccountType } = profile || {}
+      if (userAccountType === 'student') {
+        if (answersArr && answersArr.length > 0) {
+          if (answersArr.length < 20) {
+            const hasTestResult = TestResults.findOne({ userId, testId })
+            if (!hasTestResult) {
+              const test = Tests.findOne({ _id: testId })
+              if (test) {
+                const { quizzesArr } = test
+                let totalScore = 0
+                answersArr.forEach((answerObj) => {
+                  const { quizIndex, answerIndex } = answerObj
+                  if (quizzesArr[quizIndex].correctAnswerIndex === answerIndex) {
+                    totalScore += 1
+                  }
+                })
+                const arrLength = quizzesArr.length || 10
+                const percentage = parseInt((totalScore / arrLength) * 100, 10)
+                const testResult = {
+                  userId,
+                  testId,
+                  createdAt: new Date(),
+                }
+                TestResults.insert(testResult)
+                resultObj = { success: true, msg: `You scored: ${percentage}%.` }
+              } else {
+                resultObj = { success: false, msg: 'No such test!' }
+              }
+            } else {
+              resultObj = { success: false, msg: `You've already taken the test!` }
+            }
+          } else {
+            resultObj = { success: false, msg: 'Too many asnwers' }
+          }
+        } else {
+          resultObj = { success: false, msg: 'No answer submitted!' }
+        }
+      } else {
+        resultObj = { success: false, msg: 'Account type is not allowed!' }
+      }
+    } else {
+      resultObj = { success: false, msg: 'No account!' }
+    }
+    return resultObj
+  }
 })

@@ -75,7 +75,7 @@ class MainPage extends Component {
                 const { _id, testName, rewardETH } = test
                 return (
                   <div key={_id} style={{ width: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <Link to={`/tests/${_id}`}>
+                    <Link to={`/testpage/${_id}`}>
                       <Button color="primary" onClick={() => {}}>
                         {testName} {"  -  "} {rewardETH} ETH
                       </Button>
