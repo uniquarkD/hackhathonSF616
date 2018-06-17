@@ -13,6 +13,7 @@ import { updateAlert } from "../../../reduxActions";
 import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
+import { Redirect } from 'react-router'
 
 class LandingPage extends Component {
   constructor(props) {
@@ -94,17 +95,6 @@ class LandingPage extends Component {
           </div>
         </Hidden>
       </Grid>
-    )
-  }
-  renderSecondSmall() {
-    return (
-      <Hidden only={['md', 'lg', 'xl']}>
-        <Grid item xs={12} sm={12} md={4} lg={4}>
-          <div style={{ paddingTop: 30, width: '100%', textAlign: 'center' }}>
-            renderBottom
-          </div>
-        </Grid>
-      </Hidden>
     )
   }
   renderSecond() {
@@ -242,6 +232,10 @@ class LandingPage extends Component {
   }
   render() {
     const windowHeight = window.innerHeight
+    const { userId } = this.props
+    if (userId) {
+      return <Redirect to='mainpage'/>
+    }
     return (
       <div style={{ height: windowHeight, paddingLeft: '5%', paddingRight: '5%' }}>
         {this.renderChooseRole()}

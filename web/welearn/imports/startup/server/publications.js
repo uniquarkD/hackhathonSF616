@@ -10,3 +10,7 @@ import {
 Meteor.publish("currencies", function () {
   return Currencies.find({}, { limit: 1 })
 })
+
+Meteor.publish("tests", function (limit) {
+  return Tests.find({}, { sort: { createdAt: -1 }, limit: limit || 10 })
+})
