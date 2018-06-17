@@ -35,11 +35,13 @@
     "wallKeysObj": {
       "testKeysRopstein": {
         "pubAddress": "0x8B2d32774FAF40581bedD878b53f81EE99E9737a",
-        "privateKey": "bf2d97de51784aaeb7d8001ece0c04e8081fd505ccf22a299df4e30bb7797947"
+        "privateKey": "bf2d97de51784aaeb7d8001ece0c04e8081fd505ccf22a299df4e30bb7797947",
+        "contractAddress": "0x906E696389807eB65ABcf39F5C0bD5e8f9E44Ce6"
       },
       "mainKeys": {
         "pubAddress": "0x8B2d32774FAF40581bedD878b53f81EE99E9737a",
-        "privateKey": "bf2d97de51784aaeb7d8001ece0c04e8081fd505ccf22a299df4e30bb7797947"
+        "privateKey": "bf2d97de51784aaeb7d8001ece0c04e8081fd505ccf22a299df4e30bb7797947",
+        "contractAddress": "0x906E696389807eB65ABcf39F5C0bD5e8f9E44Ce6"
       }
     }
   },

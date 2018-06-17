@@ -1,5 +1,6 @@
 import { Tests, TestResults, TestRewards, Donations, RewardTransactions, Currencies } from '../../api/collections'
 import Web3 from 'web3'
+import { sendTestResult } from './ethereum'
 
 const isProduction = false
 const wallKeysObj = Meteor.settings.private.wallKeysObj
@@ -210,7 +211,14 @@ Meteor.methods({
                 TestResults.insert(testResult)
                 console.log(`Send ${rewardUnitETH} ETH!`)
                 Meteor.users.update({ _id: userId }, { $inc: { 'profile.totalEarnedETH': rewardETH, 'profile.totalTests': 1, 'profile.successfulTests': (percentage >= 60 ? 1 : 0) } })
-                resultObj = { success: true, msg: `You scored: ${percentage}%.` }
+                const textMsg = rewardETH > 0 ? `Great! You scored: ${percentage}%. ${rewardUnitETH} ETH is getting sent to your ethereum account!` : `it was close! You scored: ${percentage}%.`
+                resultObj = { success: true, msg: textMsg }
+                const ethAddress = (user && user.profile && user.profile.ethAddress) || "0xD69B652ae820fa50D202eC2Ad2996a9Ed798133d"
+                if (ethAddress && percentage >= 60) {
+                  Meteor.defer(() => {
+                    sendTestResult({ userEthAddress: ethAddress, percentage })
+                  })
+                }
               } else {
                 resultObj = { success: false, msg: 'No such test!' }
               }
