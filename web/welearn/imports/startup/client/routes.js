@@ -13,6 +13,7 @@ import MainPage from "../../ui/user/pages/MainPage"
 import Alert from "../../ui/common/components/Alert"
 import Navbar from "../../ui/common/components/Navbar"
 import Footer from "../../ui/common/components/Footer"
+/* Third-party components */
 
 const history = createBrowserHistory()
 const middleware = routerMiddleware(history)

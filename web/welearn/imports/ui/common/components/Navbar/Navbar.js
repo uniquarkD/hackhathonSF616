@@ -21,11 +21,25 @@ class Navbar extends Component {
     super(props)
     this.state = {
       isVisibleDrawer: false,
+      loadingBtn: false,
     }
     this.setVisibleDrawer = this.setVisibleDrawer.bind(this)
+    this._isMounted = false
+  }
+  componentDidMount() {
+    this._isMounted = true
   }
   setVisibleDrawer() {
     this.setState({ isVisibleDrawer: !this.state.isVisibleDrawer })
+  }
+  loginFb() {
+    if (this._isMounted) this.setState({ loadingBtn: !this.state.loadingBtn });
+    Meteor.loginWithFacebook({}, (err) => {
+      if (this._isMounted) { this.setState({ loadingBtn: !this.state.loadingBtn }); }
+      if (err) {
+        throw new Meteor.Error("Facebook login failed");
+      }
+    })
   }
   renderSmall() {
     return (
@@ -43,7 +57,7 @@ class Navbar extends Component {
                  Main Page
                </Button>
                <Button color="primary" onClick={() => { console.log('Sign In!'); }}>
-                 Sign In
+                 Sign In FB
                </Button>
              </div>
           </Drawer>
@@ -65,7 +79,7 @@ class Navbar extends Component {
          <div style={{ height: 60, width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 20 }}>
            <Button variant="contained" color="primary" onClick={() => {
                console.log('Sign In!');
-               this.props.doUpdateAlert('Working alert!')
+               this.loginFb()
             }}>
              Sign In
            </Button>
