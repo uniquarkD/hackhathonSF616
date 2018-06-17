@@ -1,6 +1,7 @@
 import { ServiceConfiguration } from 'meteor/service-configuration';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { logoURI } from '../../config/globalConsts'
 
 const isProduction = false
 const facebookKeysObj = isProduction ? Meteor.settings.services.facebook.prod : Meteor.settings.services.facebook.dev
@@ -63,28 +64,23 @@ Meteor.startup(function () {
   Accounts.onCreateUser(function (options, user) {
     let userExtended = user
     let profile = {}
-    let userFirstName = ''
     if (user && !(user.emails && user.emails[0]) && user.services && user.services.facebook) {
       const facebookObj = user.services.facebook
       console.log(facebookObj);
-      const { email, name, first_name, last_name, gender, age_range, locale, link } = facebookObj
-      const fbProfile = { email, name, firstName: first_name, lastName: last_name, gender, ageRange: age_range, locale, link, createdAt: new Date() }
+      const { email, name, first_name, last_name, gender, age_range, locale, link, picture } = facebookObj
+      const photoURI = (picture && picture.data && picture.data.url) || logoURI
+      const fbProfile = { email, name, firstName: first_name, lastName: last_name, gender, ageRange: age_range, locale, link, photoURI, createdAt: new Date() }
       let emails;
       if (email) {
         emails = [{ address: email, verified: true }]
       }
       profile = Object.assign({}, fbProfile, options.profile)
       userExtended = Object.assign({}, user, { emails, profile })
-      userFirstName = first_name
     } else {
       const { firstName, lastName } = options.profile
       const email = (user && user.emails && user.emails[0]) ? user.emails[0].address : ''
       profile = Object.assign({}, options.profile, { name: `${firstName} ${lastName}`, email })
       userExtended = Object.assign({}, user, { profile })
-      userFirstName = firstName
-      Meteor.defer(() => {
-        updateGenderStatistics({ firstName })
-      })
     }
     return userExtended;
   });

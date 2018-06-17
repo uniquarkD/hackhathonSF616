@@ -104,7 +104,7 @@ const addFixtures = () => {
   }
 }
 
-addFixtures()
+//addFixtures()
 
 Meteor.methods({
   updateAccountType(userAccountType) {
