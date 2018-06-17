@@ -96,7 +96,7 @@ class Navbar extends Component {
     return (
        <Hidden only={['xs', 'sm']}>
          <div style={{ height: 60, width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: 20 }}>
-           <Button variant="contained" color="primary" onClick={() => {
+           <Button color="primary" onClick={() => {
               this.login(userId)
             }}>
               {

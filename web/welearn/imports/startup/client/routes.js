@@ -32,9 +32,6 @@ class Routes extends Component {
               <Route exact path="/" component={ LandingPage } />
               <Route exact path="/mainpage" component={ MainPage } />
             </div>
-            <div style={{ zIndex: 0 }}>
-              <Footer history={history} />
-            </div>
             <Alert />
           </div>
         </ConnectedRouter>

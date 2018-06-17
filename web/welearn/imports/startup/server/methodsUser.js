@@ -1,4 +1,4 @@
-import { Tests, TestResults, TestRewards, Donations, RewardTransactions } from '../../api/collections'
+import { Tests, TestResults, TestRewards, Donations, RewardTransactions, Currencies } from '../../api/collections'
 
 const addFixtures = () => {
   const testObj = {
@@ -102,9 +102,41 @@ const addFixtures = () => {
   if (!hasTestResult) {
     TestResults.insert(testResultsObj)
   }
+
+  const currencyObj = {
+    currencySymbol: 'ETH',
+    currencyName: 'Ethereum',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    currencyPrice: 500,
+  }
+  const hasCurrency = Currencies.findOne({})
+  if (!hasCurrency) {
+    Currencies.insert(currencyObj)
+  }
 }
 
-//addFixtures()
+addFixtures()
+
+const updateCurrencyPrice = () => {
+  const uri = `https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD`
+  HTTP.call("GET", uri, {}, Meteor.bindEnvironment(function (error, response) {
+    if (error) {
+      console.log(error);
+    }
+    if (response && response.data) {
+      const { USD } = response.data
+      if (USD) {
+        Currencies.update({ currencySymbol: 'ETH' }, { $set: { currencyPrice: USD } })
+      }
+    }
+  }))
+}
+
+updateCurrencyPrice()
+Meteor.setInterval(() => {
+  updateCurrencyPrice()
+}, 20 * 1000)
 
 Meteor.methods({
   updateAccountType(userAccountType) {
