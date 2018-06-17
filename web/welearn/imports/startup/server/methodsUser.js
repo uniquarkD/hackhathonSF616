@@ -175,12 +175,31 @@ Meteor.methods({
                 })
                 const arrLength = quizzesArr.length || 10
                 const percentage = parseInt((totalScore / arrLength) * 100, 10)
+                const rewardUnitETH = 0.001
+                let rewardETH = 0
+                if (percentage >= 60 && percentage < 70) {
+                  rewardETH += 1 * rewardUnitETH
+                } else if (percentage >= 70 && percentage < 80) {
+                  rewardETH += 2 * rewardUnitETH
+                } else if (percentage >= 80 && percentage < 90) {
+                  rewardETH += 3 * rewardUnitETH
+                } else if (percentage >= 90 && percentage < 100) {
+                  rewardETH += 4 * rewardUnitETH
+                } else if (percentage === 100) {
+                  rewardETH += 5 * rewardUnitETH
+                }
                 const testResult = {
                   userId,
                   testId,
+                  answersArr,
+                  percentage,
+                  rewardETH,
+                  rewardUnitETH,
                   createdAt: new Date(),
                 }
                 TestResults.insert(testResult)
+                console.log(`Send ${rewardUnitETH} ETH!`)
+                Meteor.users.update({ _id: userId }, { $inc: { 'profile.totalEarnedETH': rewardETH, 'profile.totalTests': 1, 'profile.successfulTests': (percentage >= 60 ? 1 : 0) } })
                 resultObj = { success: true, msg: `You scored: ${percentage}%.` }
               } else {
                 resultObj = { success: false, msg: 'No such test!' }
