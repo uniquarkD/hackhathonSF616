@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render, ReactDOM } from 'react-dom';
 import styles from './styles'
+import { logoURI } from '../../../../config/globalConsts'
 /* Meteor data on React */
 import { withTracker, createContainer } from 'meteor/react-meteor-data';
 /* Redux */

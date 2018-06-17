@@ -3,6 +3,7 @@ import { render, ReactDOM } from 'react-dom';
 import styles from './styles'
 import colors from '../../../../config/colors'
 import globalStyles from '../../../../config/globalStyles'
+import { appName } from '../../../../config/globalConsts'
 /* Meteor data on React */
 import { withTracker, createContainer } from 'meteor/react-meteor-data';
 /* Redux */
@@ -74,12 +75,17 @@ class Navbar extends Component {
              </div>
           </Drawer>
           <div style={{ height: 60, width: '100%', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', paddingRight: 20 }}>
-            <IconButton
-              aria-label="Menu"
-              onClick={this.setVisibleDrawer}
-            >
-              <MdMenu />
-            </IconButton>
+            <div style={{ height: 60, width: '20%', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', paddingRight: 20 }}>
+              <IconButton
+                aria-label="Menu"
+                onClick={this.setVisibleDrawer}
+              >
+                <MdMenu />
+              </IconButton>
+            </div>
+            <div style={{ height: 60, width: '60%', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', fontSize: 20, fontWeight: '500' }}>
+              {appName}
+            </div>
           </div>
          </div>
        </Hidden>
