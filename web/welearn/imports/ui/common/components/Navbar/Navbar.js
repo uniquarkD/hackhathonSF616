@@ -5,6 +5,9 @@ import colors from '../../../../config/colors'
 import globalStyles from '../../../../config/globalStyles'
 /* Meteor data on React */
 import { withTracker, createContainer } from 'meteor/react-meteor-data';
+/* Redux */
+import { connect } from "react-redux";
+import { updateAlert } from "../../../reduxActions";
 /* Third-party components */
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
@@ -33,7 +36,10 @@ class Navbar extends Component {
                <Button color="primary" onClick={() => { console.log('Sign In!'); }}>
                  Home
                </Button>
-               <Button color="primary" onClick={() => { console.log('Sign In!'); }}>
+               <Button color="primary" onClick={() => {
+                   console.log('Sign In!');
+                   this.props.doUpdateAlert('Working alert!')
+                }}>
                  Main Page
                </Button>
                <Button color="primary" onClick={() => { console.log('Sign In!'); }}>
@@ -75,9 +81,23 @@ class Navbar extends Component {
   }
 }
 
-export default withTracker(() => {
+const MeteorNavbar = withTracker(() => {
   return {
     user: Meteor.user(),
     userId: Meteor.userId(),
   };
 })(Navbar);
+
+const mapStateToProps = (state) => {
+  const { alertObject } = state.reducers
+  return { alertObject }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    doUpdateAlert: (alertMessage) => {
+      dispatch(updateAlert(alertMessage))
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MeteorNavbar)

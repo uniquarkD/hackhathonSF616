@@ -34,6 +34,7 @@ class Routes extends Component {
             <div style={{ zIndex: 0 }}>
               <Footer history={history} />
             </div>
+            <Alert />
           </div>
         </ConnectedRouter>
       </Provider>
