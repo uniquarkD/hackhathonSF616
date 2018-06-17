@@ -8,6 +8,7 @@ const addFixtures = () => {
     testName: "Ethereum 101",
     testCreator: "Admin",
     rewardETH: 0.005,
+    timeMinute: 10,
     quizzesArr: [
       {
         question: 'What is one major difference between Bitcoin and Ethereum?',
