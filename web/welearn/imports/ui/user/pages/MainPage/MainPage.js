@@ -15,6 +15,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
+import TextField from '@material-ui/core/TextField';
 import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
 
@@ -44,10 +45,32 @@ class MainPage extends Component {
       this.loginFb()
     }
   }
+  renderETHAddressInput(ethAddress) {
+    if (ethAddress) {
+      return null
+    }
+    return (
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <TextField
+          id="input"
+          label="Your Ethereum Address"
+          value={this.state.ethAddress}
+          onChange={(event) => {
+            this.setState({ ethAddress: event.target.value })
+          }}
+          margin="normal"
+          fullWidth
+        />
+        <Button color="primary" onClick={() => {}}>
+          Submit
+        </Button>
+      </div>
+    )
+  }
   renderFirst() {
     const { userId, user, tests, readyTests } = this.props
     const { profile } = user || {}
-    const { totalEarnedETH, totalTests, successfulTests } = profile || {}
+    const { totalEarnedETH, totalTests, successfulTests, ethAddress } = profile || {}
     return (
       <Grid item xs={12} sm={10} md={8} lg={6} style={{ paddingLeft: 10, paddingRight: 10 }}>
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -57,8 +80,11 @@ class MainPage extends Component {
         </div>
         <div style={{ width: '100%', textAlign: 'center', paddingTop: 30 }}>
           <div style={{ fontSize: 18, color: colors.darkGrey }}>
-           You've earned {totalEarnedETH || 0}ETH by passing {successfulTests || 0} { successfulTests && successfulTests > 1 ? 'exams' : 'exam'}
+           You've earned {totalEarnedETH || 0} ETH by passing {successfulTests || 0} / {totalTests} { successfulTests && successfulTests > 1 ? 'exams' : 'exam'}
           </div>
+        </div>
+        <div style={{ width: '100%', textAlign: 'center', paddingTop: 30 }}>
+          {this.renderETHAddressInput(ethAddress)}
         </div>
         {
           tests && tests.length > 0 ?
