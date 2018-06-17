@@ -45,6 +45,9 @@ class Navbar extends Component {
   login(userId) {
     if (userId) {
       Meteor.logout()
+      Meteor.setTimeout(() => {
+        this.props.history.push('/')
+      }, 1 * 1000)
     } else {
       this.loginFb()
     }
